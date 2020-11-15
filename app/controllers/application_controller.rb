@@ -3,6 +3,11 @@ class ApplicationController < Sinatra::Base
   set :session_secret, "my_application_secret"
   set :views, Proc.new { File.join(root, "../views/") }
 
+  configure do
+    enable :sessions unless test?
+    set :session_secret, "secret"
+  end
+  use Rack::Flash
   get '/' do
     erb :index
   end
